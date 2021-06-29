@@ -3,6 +3,48 @@ from diracgan.util import sigmoid, clip
 
 
 class VectorField(object):
+    """Base class for implementations of different GAN 
+    regularization strategies in the context of Dirac-GAN. 
+    
+    Subclasses of this class are used in the Dirac-GAN experiment 
+    to train an extremely simple GAN architecture with one 
+    generator parameter theta and one discriminator parameter psi.
+
+    Subclasses of this class must implement the [_get_vector] 
+    function and may implement the [_postprocess] function.
+
+    The [_get_vector] function takes two numpy arrays representing 
+    the current GAN parameters theta and psi as arguments. The 
+    function should return two numpy arrays representing their 
+    gradients, called v1 and v2 here. During training, the 
+    gradients will be multiplied with a learning rate parameter 
+    and then added to the current values of theta and psi. 
+
+    The [_postprocess] function is called after the above steps. It 
+    takes the updated values of theta and psi as arguments and 
+    returns postprocessed values for theta and psi. By default, this 
+    function returns its arguments unchanged.
+
+    Note, that the input arrays may contain more than one entry. In 
+    this case the output shall be computed for all theta-psi pairs 
+    and the output arrays shall have the same shape as the input 
+    arrays.
+
+    # Dirac-GAN
+
+    The Dirac-GAN [TODO: paper reference] is a simple GAN with one generator parameter theta 
+    and one discriminator parameter psi. The generator distribution is 
+    a delta peak at theta and the discriminator is given by the linear 
+    function D(x) = psi * x. The true data distribution for this 
+    experiment is a Dirac-distribution concentrated at 0.
+
+    The loss function L(theta, psi) is defined as
+
+        L(theta, psi) = f(psi * theta) + f(0)
+
+    for a real-valued function f. 
+    """
+
     def __call__(self, theta, psi):
         theta_isfloat = isinstance(theta, float)
         psi_isfloat = isinstance(psi, float)
