@@ -1,3 +1,12 @@
+"""Additional GANs for the Dirac-GAN [1] experiment.
+
+# References
+    
+[1] Mescheder, Lars, Andreas Geiger, and Sebastian Nowozin. "Which 
+    training methods for GANs do actually converge?." In International 
+    conference on machine learning, pp. 3481-3490. PMLR, 2018.
+"""
+
 from diracgan.gans import fp
 from diracgan.gans import VectorField
 import numpy as np

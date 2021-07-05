@@ -32,7 +32,7 @@ class VectorField(object):
 
     # Dirac-GAN
 
-    The Dirac-GAN [TODO: paper reference] is a simple GAN with one generator parameter theta 
+    The Dirac-GAN [1] is a simple GAN with one generator parameter theta 
     and one discriminator parameter psi. The generator distribution is 
     a delta peak at theta and the discriminator is given by the linear 
     function D(x) = psi * x. The true data distribution for this 
@@ -43,6 +43,12 @@ class VectorField(object):
         L(theta, psi) = f(psi * theta) + f(0)
 
     for a real-valued function f. 
+
+    # References
+    
+    [1] Mescheder, Lars, Andreas Geiger, and Sebastian Nowozin. "Which 
+        training methods for GANs do actually converge?." In International 
+        conference on machine learning, pp. 3481-3490. PMLR, 2018.
     """
 
     def __call__(self, theta, psi):
