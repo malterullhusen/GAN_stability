@@ -103,6 +103,13 @@ def fp2(x):
 
 
 class GAN(VectorField):
+    """Standard GAN as introduced in: 
+    
+    Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, 
+    David Warde-Farley, Sherjil Ozair, Aaron Courville, and 
+    Yoshua Bengio. "Generative adversarial nets." Advances in 
+    neural information processing systems 27 (2014).
+    """
     def _get_vector(self, theta, psi):
         v1 = -psi * fp(psi*theta)
         v2 = theta * fp(psi*theta)
