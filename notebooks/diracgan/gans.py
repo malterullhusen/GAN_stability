@@ -13,22 +13,20 @@ class VectorField(object):
     Subclasses of this class must implement the [_get_vector] 
     function and may implement the [_postprocess] function.
 
-    The [_get_vector] function takes two numpy arrays representing 
-    the current GAN parameters theta and psi as arguments. The 
-    function should return two numpy arrays representing their 
-    gradients, called v1 and v2 here. During training, the 
-    gradients will be multiplied with a learning rate parameter 
-    and then added to the current values of theta and psi. 
+    The [_get_vector] function takes two floats or two numpy arrays 
+    representing the current GAN parameters theta and psi as arguments. 
+    In the case of float inputs, the function should return two floats, 
+    and in the case of numpy array inputs the function should return 
+    two numpy arrays with the same shape as the input arrays. The two 
+    output values represent the changes that shall be applied to the 
+    parameters theta ans psi. During training, the output values of the 
+    function will be multiplied with a learning rate parameter and then 
+    added to the current values of theta and psi. 
 
     The [_postprocess] function is called after the above steps. It 
     takes the updated values of theta and psi as arguments and 
     returns postprocessed values for theta and psi. By default, this 
     function returns its arguments unchanged.
-
-    Note, that the input arrays may contain more than one entry. In 
-    this case the output shall be computed for all theta-psi pairs 
-    and the output arrays shall have the same shape as the input 
-    arrays.
 
     # Dirac-GAN
 
@@ -38,7 +36,11 @@ class VectorField(object):
     function D(x) = psi * x. The true data distribution for this 
     experiment is a Dirac-distribution concentrated at 0.
 
-    The loss function L(theta, psi) is defined as
+    This means that the generator always outputs theta and all data samples 
+    are 0. Therefore, the output of the discriminator is always zero for a 
+    real sample and always 'psi * theta' for a generator sample.
+
+    The standard loss function L(theta, psi) is defined as
 
         L(theta, psi) = f(psi * theta) + f(0)
 
